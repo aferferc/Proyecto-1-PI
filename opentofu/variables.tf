@@ -9,3 +9,9 @@ variable "imagen_debian" {
   description = "Nombre del fichero de imagen base para debian."
   default     = "debian-13-generic-amd64-tofu.qcow2"
 }
+
+variable "imagen_ubuntu" {
+  type        = string
+  description = "Nombre del fichero de imagen base para debian."
+  default     = "resolute-server-cloudimg-amd64-tofu.qcow2"
+}
