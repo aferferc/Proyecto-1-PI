@@ -1,0 +1,4 @@
+virtualhosts:
+  - nombre: alfredo
+    servername: www.alfredo.org
+    documentroot: /var/www/alfredo

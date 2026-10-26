@@ -1,4 +1,4 @@
 [servidores_web]
-web ansible_host=192.168.200.118 ansible_user=debian
+web ansible_host=192.168.200.34 ansible_user=debian
 [servidores_bd]
-bd ansible_host=192.168.200.84 ansible_user=ubuntu
+bd ansible_host=192.168.200.71 ansible_user=ubuntu

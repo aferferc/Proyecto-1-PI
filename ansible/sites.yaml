@@ -3,3 +3,9 @@
   become: true
   roles:
     - commons  
+    
+- name: Configurar apache2 con mod php
+  hosts: web
+  become: true
+  roles:
+    - apache_php
