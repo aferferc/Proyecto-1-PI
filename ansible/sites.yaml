@@ -9,3 +9,9 @@
   become: true
   roles:
     - apache_php
+    
+- name: Configurar mariadb
+  hosts: bd
+  become: true
+  roles:
+    - mariadb

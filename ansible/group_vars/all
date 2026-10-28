@@ -2,3 +2,15 @@ virtualhosts:
   - nombre: alfredo
     servername: www.alfredo.org
     documentroot: /var/www/alfredo
+    
+ip:
+  web_interna: 172.20.100.1
+  bd_interna: 172.20.100.2
+
+app:
+  bd:
+    nombre: "app_bd"
+    usuario: "app_user"
+    contraseña: "app_password"
+    
+

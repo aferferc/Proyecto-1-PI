@@ -1,0 +1,28 @@
+- name: Instalar mariadb
+  ansible.builtin.apt:
+    name: 
+      - mariadb-server
+      - python3-pymysql
+    state: present
+
+- name: Configurar bind-address en MariaDB para escuchar al server web
+  lineinfile:
+    path: /etc/mysql/mariadb.conf.d/50-server.cnf
+    regexp: '^bind-address\s*='
+    line: 'bind-address = {{ ip.web_interna }}'
+  notify: Reiniciar mariadb
+  
+- name: Crear base de datos para la app
+  ansible.mariadb.mariadb_db:
+    name: "{{ app.bd.nombre }}"
+    state: present
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+
+- name: Crear usuario de para la bd de la app (vinculado a la ip interna de web)
+  ansible.mariadb.mariadb_user:
+    name: "{{ app.bd.usuario }}"
+    password: "{{ app.bd.contraseña }}"
+    host: "{{ ip.web_interna }}"
+    priv: "{{ app.bd.nombre }}.*:ALL"
+    state: present
+    login_unix_socket: /var/run/mysqld/mysqld.sock
