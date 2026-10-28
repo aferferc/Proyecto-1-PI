@@ -1,8 +1,10 @@
-- name: Instalar apache2 con mod php
+- name: Instalar apache2 con mod php e instalar y configurar la app
   ansible.builtin.apt:
     name: 
       - apache2
       - libapache2-mod-php
+      - php-mysql
+      - php-mbstring
     state: present
     
 - name: Crear el DocumentRoot de cada virtual host
@@ -31,8 +33,35 @@
   loop: "{{ virtualhosts }}"
   notify: Recargar apache2
   
+- name: Activar Redirecciones
+  apache2_module:
+    name: rewrite
+    state: present
+  notify: Reiniciar apache2
+  
 - name: Desactivar la pagina por defecto
-  ansible.builtin.command:
-    cmd: "a2dissite 000-default.conf"
+  ansible.builtin.file:
+    path: /etc/apache2/sites-enabled/000-default.conf
+    state: absent
   notify: Recargar apache2
+  
+# En esta tarea introduje la funcion selectattr en la variable, como la variable virtualhost podria tener dentro varios virtualhost pero solo queremos que copie la app al vhost con mi nombre, con selectattr filtramos los posibles vhost por su variable nombre para quedarnos con el que nos interesa solamente. Esta practica se usa mas adelante en otras tasks
+- name: Copiar app al document root
+  ansible.builtin.copy:
+    src: ./
+    dest: "{{ (virtualhosts | selectattr('nombre', 'equalto', 'alfredo') | first).documentroot }}"
+    owner: www-data
+    group: www-data
+    mode: '0644'
+    
+    
+- name: Configurar app
+  ansible.builtin.template:
+    src: config.php.j2
+    dest: "{{ (virtualhosts | selectattr('nombre', 'equalto', 'alfredo') | first).documentroot }}/config.php"
+    owner: www-data
+    group: www-data
+    mode: "0644"
+
+  
   

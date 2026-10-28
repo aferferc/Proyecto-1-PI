@@ -4,4 +4,10 @@
 
     ErrorLog  ${APACHE_LOG_DIR}/{{ item.nombre }}_error.log
     CustomLog ${APACHE_LOG_DIR}/{{ item.nombre }}_access.log combined
+    
+    <Directory {{ item.documentroot }}>
+        Options Indexes FollowSymLinks
+        AllowOverride All
+        Require all granted
+    </Directory>
 </VirtualHost>
