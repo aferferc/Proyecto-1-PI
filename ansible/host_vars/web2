@@ -1,0 +1,6 @@
+virtualhosts:
+  - nombre: alfredo
+    servername: www.alfredo.org
+    documentroot: /var/www/alfredo
+    ip_escucha: 172.20.100.3
+    
