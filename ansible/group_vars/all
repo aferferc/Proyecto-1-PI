@@ -4,8 +4,11 @@ virtualhosts:
     documentroot: /var/www/alfredo
     
 ip:
-  web_interna: 172.20.100.1
+  web1_interna: 172.20.100.1
+  web2_interna: 172.20.100.3
   bd_interna: 172.20.100.2
+  balanceador_interna: 172.20.100.10
+  
 
 app:
   bd:

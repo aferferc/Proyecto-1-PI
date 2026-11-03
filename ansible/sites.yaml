@@ -17,3 +17,9 @@
   become: true
   roles:
     - mariadb
+    
+- name: Configurar haproxy
+  hosts: balanceador
+  become: true
+  roles:
+    - haproxy
