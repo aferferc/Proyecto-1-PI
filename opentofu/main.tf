@@ -15,7 +15,7 @@ resource "libvirt_volume" "disco-web1" {
 resource "libvirt_cloudinit_disk" "cloud-init-web1" {
   name           = "cloud-init-web1.iso"
   pool           = var.pool_libvirt
-  user_data      = file("${path.module}/cloud-init/user-data-web.yaml")
+  user_data      = file("${path.module}/cloud-init/user-data-web1.yaml")
   network_config = file("${path.module}/cloud-init/network-config-web1.yaml")
 }
 
@@ -61,7 +61,7 @@ resource "libvirt_volume" "disco-web2" {
 resource "libvirt_cloudinit_disk" "cloud-init-web2" {
   name           = "cloud-init-web2.iso"
   pool           = var.pool_libvirt
-  user_data      = file("${path.module}/cloud-init/user-data-web.yaml")
+  user_data      = file("${path.module}/cloud-init/user-data-web2.yaml")
   network_config = file("${path.module}/cloud-init/network-config-web2.yaml")
 }
 

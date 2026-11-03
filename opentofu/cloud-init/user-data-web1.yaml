@@ -1,5 +1,5 @@
 #cloud-config
-hostname: web
+hostname: web1
 
 timezone: Europe/Madrid
 locale: es_ES.UTF-8
