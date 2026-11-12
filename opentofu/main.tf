@@ -26,11 +26,6 @@ resource "libvirt_domain" "web1-proyecto-1" {
   vcpu   = 1
 
   network_interface {
-    network_id     = libvirt_network.nat-proyecto-1.id
-    wait_for_lease = true
-  }
-
-  network_interface {
     network_id = libvirt_network.muy-aislada-proyecto-1.id
   }
 
@@ -72,11 +67,6 @@ resource "libvirt_domain" "web2-proyecto-1" {
   vcpu   = 1
 
   network_interface {
-    network_id     = libvirt_network.nat-proyecto-1.id
-    wait_for_lease = true
-  }
-
-  network_interface {
     network_id = libvirt_network.muy-aislada-proyecto-1.id
   }
 
@@ -116,11 +106,6 @@ resource "libvirt_domain" "bd-proyecto-1" {
   name   = "bd-proyecto-1"
   memory = 2048
   vcpu   = 1
-
-  network_interface {
-    network_id     = libvirt_network.nat-proyecto-1.id
-    wait_for_lease = true
-  }
 
   network_interface {
     network_id = libvirt_network.muy-aislada-proyecto-1.id

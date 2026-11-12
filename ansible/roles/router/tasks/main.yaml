@@ -31,3 +31,14 @@
   notify:
     - Recargar systemd
     - Activar nat
+    
+#Como el router es ahora la unica forma que tienen los servidores de acceder a internet, y los cloud init necesitan hacer consultas a internet para terminar de confiugrar las maquinas, hacemos que justo despues de configurar el balanceador como router ansible espere un poco a que los cloud init acaben de configurar.
+
+#Ademas, como por defecto asible ejecuta los handlers al final de la play, tenemos que hacer todos se ejecuten antes de la espera o la espera no habra servido para nada, para eso usamos flush_handlers del modulo meta
+
+- name: Ejecutar handlers antes de espera
+  ansible.builtin.meta: flush_handlers
+
+- name: Esperar a cloud init de servidores antes de continuar
+  ansible.builtin.pause:
+    seconds: 90
