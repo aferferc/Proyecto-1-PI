@@ -4,6 +4,15 @@
       - iptables
     state: present
   
+- name: Activar Forwarding
+  ansible.builtin.copy:
+    src: 99-forward.conf
+    dest: "/etc/sysctl.d/99-forward.conf"
+    owner: root
+    group: root
+    mode: '0755'
+  notify: Reiniciar sysctl
+
 - name: Copiar el script de iptables
   ansible.builtin.copy:
     src: iptables-nat.sh
@@ -12,7 +21,7 @@
     group: root
     mode: '0755'
     
-- name: Copiar unidad systemd para arranque automatico de nat (tambien la activamos en el momento)
+- name: Copiar y activar unidad systemd para arranque automatico de nat
   ansible.builtin.copy:
     src: iptables-nat.service
     dest: "/etc/systemd/system/iptables-nat.service"

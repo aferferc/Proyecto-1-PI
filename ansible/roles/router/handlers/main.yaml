@@ -7,3 +7,8 @@
     name: iptables-nat
     enabled: true
     state: started
+    
+- name: Reiniciar sysctl
+  ansible.builtin.service:
+    name: systemd-sysctl
+    state: restarted
