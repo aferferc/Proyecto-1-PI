@@ -1,0 +1,24 @@
+- name: Asegurar que iptables esta instalado
+  ansible.builtin.apt:
+    name: 
+      - iptables
+    state: present
+  
+- name: Copiar el script de iptables
+  ansible.builtin.copy:
+    src: iptables-nat.sh
+    dest: "/usr/local/bin/iptables-nat.sh"
+    owner: root
+    group: root
+    mode: '0755'
+    
+- name: Copiar unidad systemd para arranque automatico de nat (tambien la activamos en el momento)
+  ansible.builtin.copy:
+    src: iptables-nat.service
+    dest: "/etc/systemd/system/iptables-nat.service"
+    owner: root
+    group: root
+    mode: '0755'
+  notify:
+    - Recargar systemd
+    - Activar nat

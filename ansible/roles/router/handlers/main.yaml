@@ -1,0 +1,9 @@
+- name: Recargar systemd
+  ansible.builtin.systemd_service:
+    daemon_reload: true
+    
+- name: Activar nat
+  ansible.builtin.service:
+    name: iptables-nat
+    enabled: true
+    state: started

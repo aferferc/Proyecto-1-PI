@@ -1,3 +1,10 @@
+- name: Configuracion router
+  hosts: balanceador
+  become: true
+  roles:
+    - commons
+    - router
+    
 - name: Configuración comun a todos los hosts
   hosts: all
   become: true

@@ -1,0 +1,12 @@
+[Unit]
+Description=Cargar reglas iptables para nat
+After=local-fs.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/iptables-nat.sh
+User=root
+RemainAfterExit=yes
+
+[Install]
+WantedBy=network.target

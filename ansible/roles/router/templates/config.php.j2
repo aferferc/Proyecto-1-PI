@@ -1,0 +1,13 @@
+<?php
+// Archivo: config.php
+// Configuración de conexión a MariaDB/MySQL
+
+return [
+    'db' => [
+        'host' => '{{ ip.bd_interna }}',
+        'name' => '{{ app.bd.nombre }}',
+        'user' => '{{ app.bd.usuario }}',
+        'pass' => '{{ app.bd.contraseña }}',
+        'charset' => 'utf8mb4',
+    ],
+];
