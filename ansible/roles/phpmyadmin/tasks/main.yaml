@@ -1,0 +1,15 @@
+- name: Instalar nginx con php-fpm
+  ansible.builtin.apt:
+    name: 
+      - nginx
+      - php-fpm
+    state: present
+
+- name: Configuracion del vhost para pma
+  ansible.builtin.template:
+    src: vhost.j2
+    dest: "/etc/nginx/sites-enabled/phpmyadmin"
+    owner: root
+    group: root
+    mode: "0644"
+  notify: Recargar nginx
