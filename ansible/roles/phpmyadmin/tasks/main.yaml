@@ -13,3 +13,29 @@
     group: root
     mode: "0644"
   notify: Recargar nginx
+  
+#Desactivamos el vhost por defecto de nginx para evitar conflictos
+- name: Desactiva vhost por defecto
+  ansible.builtin.file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+  
+- name: Crear documentroot pma
+  ansible.builtin.file:
+    path: /var/www/phpmyadmin
+    state: directory
+    owner: www-data
+    group: www-data
+    mode: "0755"
+    
+#Como phpmyadmin tiene una gran cantidad de ficheros, si usamos el modulo file que usa scp tardara demasiado, así que usamos el modulo posix.synchronize que trabaja con rsync y sera mucho mas rapido
+- name: Copiar phpmyadmin al document root
+  ansible.posix.synchronize:
+    src: "{{ role_path }}/files/"
+    dest: /var/www/phpmyadmin/
+    use_ssh_args: true
+    owner: false
+    group: false
+    rsync_opts:
+      - "--chmod=D0755,F0644"
+      - "--chown=www-data:www-data"
