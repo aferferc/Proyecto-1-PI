@@ -35,6 +35,15 @@ defaults
         
 frontend servidores_web
     bind *:80
+    
+    #Usamos la directiva acl para filtrar por los nombres de los vhost, ya que haproxy no tiene una directiva server_name explicita como apache o nginx
+    
+    acl host_app hdr(host) -i app.proyecto1.org
+    acl host_pma hdr(host) -i pma.proyecto1.org
+    
+    use_backend servidores_web_backend  if host_app
+    use_backend mariadb_pma if host_pma
+    
     default_backend servidores_web_backend
 
 backend servidores_web_backend
@@ -43,3 +52,8 @@ backend servidores_web_backend
     option forwardfor
     server web1 {{ ip.web1_interna }}:80 check inter 2s fall 3 rise 2
     server web2 {{ ip.web2_interna }}:80 check inter 2s fall 3 rise 2
+    
+#Para servir tambien el pma a traves de balanceador, añadimos un segundo backend que apunta a bd
+backend mariadb_pma
+    option forwardfor
+    server bd {{ ip.bd_interna }}:80 check

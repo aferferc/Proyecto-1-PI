@@ -5,6 +5,14 @@
       - php-fpm
     state: present
 
+- name: Añadir formato de log para ver las ip que acceden a pma
+  ansible.builtin.lineinfile:
+    path: /etc/nginx/nginx.conf
+    insertafter: '^\s*http\s*\{'
+    regexp: '^\s*log_format\s+balanceado\b'
+    line: "\tlog_format balanceado '$http_x_forwarded_for - $remote_user [$time_local] \"$request\" $status $body_bytes_sent';"
+  notify: Recargar nginx
+
 - name: Configuracion del vhost para pma
   ansible.builtin.template:
     src: vhost.j2
