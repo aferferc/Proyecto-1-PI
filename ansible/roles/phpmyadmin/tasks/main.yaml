@@ -3,6 +3,13 @@
     name: 
       - nginx
       - php-fpm
+      - php-mysqli
+      - php-mbstring
+      - php-zip
+      - php-gd
+      - php-json
+      - php-curl
+      - php-xml
     state: present
 
 - name: Añadir formato de log para ver las ip que acceden a pma
